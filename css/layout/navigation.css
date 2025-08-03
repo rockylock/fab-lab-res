@@ -1,0 +1,26 @@
+.nav-tabs {
+            display: flex;
+            margin-bottom: var(--spacing-xxl);
+            border-bottom: 3px solid var(--border-light);
+        }
+        
+        .nav-tab {
+            padding: var(--spacing-md) var(--spacing-xxl);
+            background: none;
+            border: none;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all var(--transition-normal);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-tab:hover {
+            color: var(--primary-blue-dark);
+        }
+        
+        .nav-tab--active {
+            color: var(--primary-blue);
+            border-bottom-color: var(--primary-blue);
+        }

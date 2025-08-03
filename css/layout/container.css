@@ -1,0 +1,12 @@
+.app-container {
+            max-width: var(--container-xl);
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--radius-xxl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+        }
+        
+        .app-main {
+            padding: var(--spacing-xxxl);
+        }

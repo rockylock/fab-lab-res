@@ -1,0 +1,122 @@
+:root {
+            /* Primary Colors */
+            --primary-blue: #3498db;
+            --primary-blue-dark: #2980b9;
+            --primary-blue-light: #ebf3fd;
+            
+            /* Secondary Colors */
+            --secondary-purple: #764ba2;
+            --secondary-purple-light: #667eea;
+            
+            /* Status Colors */
+            --success-green: #27ae60;
+            --success-green-light: #d4edda;
+            --success-green-dark: #155724;
+            
+            --warning-yellow: #f39c12;
+            --warning-yellow-light: #fff3cd;
+            --warning-yellow-dark: #856404;
+            
+            --danger-red: #e74c3c;
+            --danger-red-light: #f8d7da;
+            --danger-red-dark: #721c24;
+            
+            --info-blue: #2196f3;
+            --info-blue-light: #e3f2fd;
+            --info-blue-dark: #1565c0;
+            
+            /* Neutral Colors */
+            --white: #ffffff;
+            --gray-50: #f8f9fa;
+            --gray-100: #e9ecef;
+            --gray-200: #dee2e6;
+            --gray-300: #ced4da;
+            --gray-400: #6c757d;
+            --gray-500: #7f8c8d;
+            --gray-600: #5a6268;
+            --gray-700: #343a40;
+            --gray-800: #2c3e50;
+            --gray-900: #212529;
+            
+            /* Background Colors */
+            --bg-body: var(--white);
+            --bg-light: var(--gray-50);
+            --bg-selected: var(--primary-blue-light);
+            --bg-disabled: var(--gray-100);
+            
+            /* Text Colors */
+            --text-primary: var(--gray-800);
+            --text-secondary: var(--gray-500);
+            --text-muted: var(--gray-400);
+            --text-white: var(--white);
+            
+            /* Border Colors */
+            --border-light: var(--gray-100);
+            --border-medium: var(--gray-200);
+            --border-dark: var(--gray-300);
+            --border-focus: var(--primary-blue);
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-header: linear-gradient(135deg, #2c3e50, #3498db);
+            --gradient-button: linear-gradient(135deg, #3498db, #2980b9);
+            
+            /* Spacing Scale */
+            --spacing-xs: 5px;
+            --spacing-sm: 10px;
+            --spacing-md: 15px;
+            --spacing-lg: 20px;
+            --spacing-xl: 25px;
+            --spacing-xxl: 30px;
+            --spacing-xxxl: 40px;
+            
+            /* Border Radius */
+            --radius-xs: 4px;
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 10px;
+            --radius-xl: 15px;
+            --radius-xxl: 20px;
+            --radius-pill: 20px;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.1);
+            --shadow-focus: 0 4px 12px rgba(52, 152, 219, 0.4);
+            --shadow-selected: 0 10px 30px rgba(52, 152, 219, 0.2);
+            
+            /* Typography Scale */
+            --font-size-xs: 0.8rem;
+            --font-size-sm: 0.9rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.2rem;
+            --font-size-xl: 1.3rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 2rem;
+            --font-size-4xl: 2.5rem;
+            
+            /* Font Weights */
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            
+            /* Line Heights */
+            --line-height-tight: 1.25;
+            --line-height-normal: 1.4;
+            --line-height-relaxed: 1.5;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Container Widths */
+            --container-xl: 1200px;
+            
+            /* Grid Breakpoints */
+            --breakpoint-md: 768px;
+            --breakpoint-lg: 992px;
+        }

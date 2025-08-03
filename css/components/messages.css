@@ -1,0 +1,20 @@
+.message {
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            margin-top: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            font-weight: var(--font-weight-semibold);
+            text-align: center;
+        }
+        
+        .message--success {
+            background: var(--success-green-light);
+            color: var(--success-green-dark);
+            border: 1px solid var(--success-green);
+        }
+        
+        .message--error {
+            background: var(--danger-red-light);
+            color: var(--danger-red-dark);
+            border: 1px solid var(--danger-red);
+        }

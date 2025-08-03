@@ -1,0 +1,17 @@
+.info-box {
+            background: var(--info-blue-light);
+            border-left: 4px solid var(--info-blue);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        }
+        
+        .info-box__title {
+            color: var(--info-blue-dark);
+            margin-bottom: var(--spacing-sm);
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .info-box__text {
+            margin: 0;
+        }

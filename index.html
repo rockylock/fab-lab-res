@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoA Fab Lab - Machine Reservations</title>
+    
+    <!-- CSS Base Styles -->
+    <link rel="stylesheet" href="css/base/variables.css">
+    <link rel="stylesheet" href="css/base/reset.css">
+    <link rel="stylesheet" href="css/base/typography.css">
+    
+    <!-- CSS Layout Styles -->
+    <link rel="stylesheet" href="css/layout/container.css">
+    <link rel="stylesheet" href="css/layout/header.css">
+    <link rel="stylesheet" href="css/layout/navigation.css">
+    
+    <!-- CSS Component Styles -->
+    <link rel="stylesheet" href="css/components/info-box.css">
+    <link rel="stylesheet" href="css/components/machine-grid.css">
+    <link rel="stylesheet" href="css/components/machine-card.css">
+    <link rel="stylesheet" href="css/components/forms.css">
+    <link rel="stylesheet" href="css/components/buttons.css">
+    <link rel="stylesheet" href="css/components/messages.css">
+    <link rel="stylesheet" href="css/components/tables.css">
+    
+    <!-- CSS Page Styles -->
+    <link rel="stylesheet" href="css/pages/admin.css">
+    
+    <!-- CSS Utility Styles -->
+    <link rel="stylesheet" href="css/utilities/layout.css">
+</head>
+<body class="padding-xxxl">
+    <div class="app-container">
+        <header class="app-header">
+            <h1 class="app-header__title">CoA Fab Lab</h1>
+            <p class="app-header__subtitle">Machine Reservations & Workshop Bookings</p>
+        </header>
+
+        <main class="app-main">
+            <nav class="nav-tabs">
+                <button class="nav-tab nav-tab--active" onclick="showTab('reserve')">Reserve Equipment</button>
+                <button class="nav-tab" onclick="showTab('calendar')">View Calendar</button>
+                <button class="nav-tab" onclick="showTab('admin')">Admin Dashboard</button>
+                <button class="nav-tab" onclick="showTab('machines')">Manage Machines</button>
+            </nav>
+
+            <section id="reserve" class="tab-content tab-content--active">
+                <div class="info-box">
+                    <h3 class="info-box__title">🛠️ Equipment Reservation System</h3>
+                    <p class="info-box__text">Select a machine or workspace below to check availability and make a reservation. All reservations are free for CoA students!</p>
+                </div>
+                
+                <div class="machine-grid" id="machineGrid">
+                    <!-- Machine cards will be generated dynamically -->
+                </div>
+            </section>
+
+            <section id="calendar" class="tab-content">
+                <div class="info-box">
+                    <h3 class="info-box__title">📅 Lab Schedule</h3>
+                    <p class="info-box__text">View all machine reservations, workshops, and lab availability.</p>
+                </div>
+                <p>Calendar content will go here...</p>
+            </section>
+
+            <section id="admin" class="tab-content">
+                <div class="info-box">
+                    <h3 class="info-box__title">🔧 Admin Dashboard</h3>
+                    <p class="info-box__text">Manage reservations, view usage statistics, and configure system settings.</p>
+                </div>
+                
+                <h3>Quick Stats</h3>
+                <div id="statsSection" class="admin-stats">
+                    <p>Loading stats...</p>
+                </div>
+                
+                <h3>All Reservations</h3>
+                <div class="admin-filters">
+                    <div class="admin-filters__grid">
+                        <div class="form__group">
+                            <label class="form__label">Search Student:</label>
+                            <input type="text" id="studentSearch" placeholder="Enter student name or email" class="form__input" oninput="applyFilters()">
+                        </div>
+                        <div class="form__group">
+                            <label class="form__label">Machine:</label>
+                            <select id="machineFilter" class="form__select" onchange="applyFilters()">
+                                <option value="">All Machines</option>
+                            </select>
+                        </div>
+                        <div class="form__group">
+                            <label class="form__label">From Date:</label>
+                            <input type="date" id="dateFrom" class="form__input" onchange="applyFilters()">
+                        </div>
+                        <div class="form__group">
+                            <label class="form__label">To Date:</label>
+                            <input type="date" id="dateTo" class="form__input" onchange="applyFilters()">
+                        </div>
+                    </div>
+                    <div class="admin-filters__actions">
+                        <button onclick="clearFilters()" class="btn btn--secondary admin-filters__button">Clear All Filters</button>
+                        <button onclick="exportToCSV()" class="btn btn--success">📊 Export to CSV</button>
+                    </div>
+                </div>
+                <div id="reservationsList">
+                    <p>Loading reservations...</p>
+                </div>
+            </section>
+
+            <section id="machines" class="tab-content">
+                <div class="info-box">
+                    <h3 class="info-box__title">🔧 Machine Management</h3>
+                    <p class="info-box__text">Add new equipment, edit existing machines, set availability schedules, and manage safety requirements.</p>
+                </div>
+                
+                <div id="machineManagementSection">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg);">
+                        <h3 id="machineListHeader">Current Machines</h3>
+                        <button onclick="showAddMachineForm()" class="btn btn--success">➕ Add New Machine</button>
+                    </div>
+                    
+                    <div id="addMachineForm" style="display: none; background: var(--white); padding: var(--spacing-lg); border-radius: var(--radius-md); border: 1px solid var(--border-medium); margin-bottom: var(--spacing-lg);">
+                        <h4 style="margin-bottom: var(--spacing-md); color: var(--text-primary);">Add New Machine</h4>
+                        <div class="form__row">
+                            <div class="form__group">
+                                <label class="form__label">Machine Name *</label>
+                                <input type="text" id="newMachineName" placeholder="e.g., 3D Printer" class="form__input">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Description *</label>
+                                <input type="text" id="newMachineDescription" placeholder="Brief description of the machine" class="form__input">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Status</label>
+                                <select id="newMachineStatus" class="form__select" onchange="toggleMaintenanceFields('new')">
+                                    <option value="Available">Available</option>
+                                    <option value="Maintenance">Maintenance</option>
+                                    <option value="Out of Order">Out of Order</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Maintenance Fields -->
+                        <div id="newMaintenanceFields" style="display: none; margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--warning-yellow-light); border-radius: var(--radius-sm); border: 1px solid var(--warning-yellow);">
+                            <h5 style="margin-bottom: var(--spacing-sm); color: var(--warning-yellow-dark);">Maintenance Window</h5>
+                            <div class="form__row">
+                                <div class="form__group">
+                                    <label class="form__label">Start Date</label>
+                                    <input type="date" id="newMaintenanceStart" class="form__input" onchange="validateMaintenanceDates('new')">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">End Date</label>
+                                    <input type="date" id="newMaintenanceEnd" class="form__input" onchange="validateMaintenanceDates('new')">
+                                </div>
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Public Description</label>
+                                <input type="text" id="newMaintenanceNotes" placeholder="e.g., Routine calibration, Filter replacement" class="form__input">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Admin Notes</label>
+                                <input type="text" id="newMaintenanceAdminNotes" placeholder="e.g., Contact info, budget codes, internal tracking" class="form__input">
+                            </div>
+                        </div>
+                        
+                        <!-- Out of Order Fields -->
+                        <div id="newOutOfOrderFields" style="display: none; margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--danger-red-light); border-radius: var(--radius-sm); border: 1px solid var(--danger-red);">
+                            <h5 style="margin-bottom: var(--spacing-sm); color: var(--danger-red-dark);">Out of Order Details</h5>
+                            <div class="form__row">
+                                <div class="form__group">
+                                    <label class="form__label">Out of Order Since</label>
+                                    <input type="date" id="newOutOfOrderSince" class="form__input" onchange="validateOutOfOrderDates('new')">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">Expected Back Online</label>
+                                    <input type="date" id="newExpectedOnline" class="form__input" onchange="validateOutOfOrderDates('new')">
+                                </div>
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Public Description</label>
+                                <input type="text" id="newOutOfOrderReason" placeholder="e.g., Temporarily unavailable, Under repair" class="form__input">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Admin Notes</label>
+                                <input type="text" id="newOutOfOrderAdminNotes" placeholder="e.g., Vendor contact, warranty info, repair tracking" class="form__input">
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: var(--spacing-md);">
+                            <button onclick="addNewMachine()" class="btn btn--primary" style="margin-right: var(--spacing-sm);">Save Machine</button>
+                            <button onclick="cancelAddMachine()" class="btn btn--secondary">Cancel</button>
+                        </div>
+                    </div>
+                    
+                    <div id="editMachineForm" style="display: none; background: var(--white); padding: var(--spacing-lg); border-radius: var(--radius-md); border: 1px solid var(--border-medium); margin-bottom: var(--spacing-lg);">
+                        <h4 style="margin-bottom: var(--spacing-md); color: var(--text-primary);">Edit Machine</h4>
+                        <div class="form__row">
+                            <div class="form__group">
+                                <label class="form__label">Machine Name *</label>
+                                <input type="text" id="editMachineName" placeholder="e.g., 3D Printer" class="form__input">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Description *</label>
+                                <input type="text" id="editMachineDescription" placeholder="Brief description of the machine" class="form__input">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Status</label>
+                                <select id="editMachineStatus" class="form__select" onchange="toggleMaintenanceFields('edit')">
+                                    <option value="Available">Available</option>
+                                    <option value="Maintenance">Maintenance</option>
+                                    <option value="Out of Order">Out of Order</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Maintenance Fields -->
+                        <div id="editMaintenanceFields" style="display: none; margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--warning-yellow-light); border-radius: var(--radius-sm); border: 1px solid var(--warning-yellow);">
+                            <h5 style="margin-bottom: var(--spacing-sm); color: var(--warning-yellow-dark);">Maintenance Window</h5>
+                            <div class="form__row">
+                                <div class="form__group">
+                                    <label class="form__label">Start Date</label>
+                                    <input type="date" id="editMaintenanceStart" class="form__input" onchange="validateMaintenanceDates('edit')">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">End Date</label>
+                                    <input type="date" id="editMaintenanceEnd" class="form__input" onchange="validateMaintenanceDates('edit')">
+                                </div>
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Public Description</label>
+                                <input type="text" id="editMaintenanceNotes" placeholder="e.g., Routine calibration, Filter replacement" class="form__input">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Admin Notes</label>
+                                <input type="text" id="editMaintenanceAdminNotes" placeholder="e.g., Contact info, budget codes, internal tracking" class="form__input">
+                            </div>
+                        </div>
+                        
+                        <!-- Out of Order Fields -->
+                        <div id="editOutOfOrderFields" style="display: none; margin-top: var(--spacing-md); padding: var(--spacing-md); background: var(--danger-red-light); border-radius: var(--radius-sm); border: 1px solid var(--danger-red);">
+                            <h5 style="margin-bottom: var(--spacing-sm); color: var(--danger-red-dark);">Out of Order Details</h5>
+                            <div class="form__row">
+                                <div class="form__group">
+                                    <label class="form__label">Out of Order Since</label>
+                                    <input type="date" id="editOutOfOrderSince" class="form__input" onchange="validateOutOfOrderDates('edit')">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">Expected Back Online</label>
+                                    <input type="date" id="editExpectedOnline" class="form__input" onchange="validateOutOfOrderDates('edit')">
+                                </div>
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Public Description</label>
+                                <input type="text" id="editOutOfOrderReason" placeholder="e.g., Temporarily unavailable, Under repair" class="form__input">
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Admin Notes</label>
+                                <input type="text" id="editOutOfOrderAdminNotes" placeholder="e.g., Vendor contact, warranty info, repair tracking" class="form__input">
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: var(--spacing-md);">
+                            <button onclick="saveEditedMachine()" class="btn btn--primary" style="margin-right: var(--spacing-sm);">Save Changes</button>
+                            <button onclick="cancelEditMachine()" class="btn btn--secondary">Cancel</button>
+                        </div>
+                    </div>
+                    
+                    <div id="machinesList">
+                        <p>Loading machines...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- JavaScript Modules -->
+    <script src="js/utils/validation.js"></script>
+    <script src="js/utils/timeUtils.js"></script>
+    <script src="js/services/ReservationService.js"></script>
+    <script src="js/services/MachineService.js"></script>
+    <script src="js/components/UIManager.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+.machine-card {
+            background: var(--bg-light);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 2px solid var(--border-light);
+            transition: all var(--transition-normal);
+            cursor: pointer;
+        }
+        
+        .machine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue);
+        }
+        
+        .machine-card--selected {
+            border-color: var(--primary-blue);
+            background: var(--bg-selected);
+            transform: none;
+            box-shadow: var(--shadow-selected);
+            grid-column: 1 / -1;
+            max-width: none;
+        }
+        
+        .machine-card--selected .machine-card__content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: var(--spacing-xxl);
+            align-items: start;
+        }
+        
+        .machine-card__name {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .machine-card__description {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-normal);
+        }
+        
+        .machine-card__status {
+            display: inline-block;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-pill);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-semibold);
+            background: var(--success-green-light);
+            color: var(--success-green-dark);
+        }
+        
+        .machine-card__status--maintenance {
+            background: var(--warning-yellow-light);
+            color: var(--warning-yellow-dark);
+        }
+        
+        .machine-card__status--out-of-order {
+            background: var(--danger-red-light);
+            color: var(--danger-red-dark);
+        }
+        
+        .machine-card__warning {
+            background: var(--warning-yellow-light);
+            border-left: 4px solid var(--warning-yellow);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+        
+        .machine-card__warning--danger {
+            background: var(--danger-red-light);
+            border-left-color: var(--danger-red);
+        }
+        
+        .machine-card__warning-text {
+            color: var(--warning-yellow-dark);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            margin: 0;
+            line-height: var(--line-height-normal);
+        }
+        
+        .machine-card__warning--danger .machine-card__warning-text {
+            color: var(--danger-red-dark);
+        }
+        
+        .form__input--date-error {
+            border-color: var(--danger-red) !important;
+            background-color: var(--danger-red-light) !important;
+        }
+        
+        .form__date-error-message {
+            color: var(--danger-red);
+            font-size: var(--font-size-xs);
+            margin-top: var(--spacing-xs);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .form__date-warning-message {
+            color: var(--warning-yellow-dark);
+            font-size: var(--font-size-xs);
+            margin-top: var(--spacing-xs);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .form__input--date-warning {
+            border-color: var(--warning-yellow) !important;
+            background-color: var(--warning-yellow-light) !important;
+        }
+        
+        .machine-card__form {
+            display: none;
+        }
+        
+        .machine-card--selected .machine-card__form {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .machine-card--selected .machine-card__content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+        }
