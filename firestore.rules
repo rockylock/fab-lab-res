@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.token.email in ['miguelovega@gmail.com', 'mvega@peralta.edu'];
+    }
+    
+    // Helper function to check if user owns the reservation
+    function isOwner(reservation) {
+      return request.auth != null && 
+             request.auth.uid == reservation.userId;
+    }
+    
+    // Users collection - users can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if isAdmin();
+    }
+    
+    // Reservations collection
+    match /reservations/{reservationId} {
+      // Students can read/write their own reservations
+      allow read, write: if request.auth != null && 
+                           resource.data.userId == request.auth.uid;
+      
+      // Admins can read/write all reservations
+      allow read, write: if isAdmin();
+      
+      // Allow creation of new reservations
+      allow create: if request.auth != null && 
+                      request.resource.data.userId == request.auth.uid;
+    }
+    
+    // Machines collection - read-only for students, full access for admins
+    match /machines/{machineId} {
+      allow read: if true; // Anyone can read machine info
+      allow write: if isAdmin(); // Only admins can modify machines
+    }
+    
+    // Admin settings collection - admin only
+    match /admin/{document=**} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Audit logs - admin only
+    match /audit/{logId} {
+      allow read, write: if isAdmin();
+    }
+  }
+} 

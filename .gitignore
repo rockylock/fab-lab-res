@@ -32,3 +32,17 @@ coverage/
 # Temporary folders
 tmp/
 temp/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Environment variables and secrets
+.env
+.env.local
+.env.production
+
+# Firebase configuration (contains API keys)
+js/config/firebase-config.js
